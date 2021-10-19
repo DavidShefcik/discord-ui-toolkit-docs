@@ -6,15 +6,15 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
-  url: "https://your-docusaurus-test-site.com",
+  title: "Discord UI Toolkit",
+  tagline: "React component replicas from Discord's UI",
+  url: "https://discord-ui-toolkit.github.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "facebook", // Usually your GitHub org/user name.
-  projectName: "docusaurus", // Usually your repo name.
+  organizationName: "DavidShefcik", // Usually your GitHub org/user name.
+  projectName: "discord-ui-toolkit", // Usually your repo name.
 
   presets: [
     [
@@ -24,13 +24,8 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/facebook/docusaurus/edit/main/website/",
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
           editUrl:
-            "https://github.com/facebook/docusaurus/edit/main/website/blog/",
+            "https://github.com/DavidShefcik/discord-ui-toolkit-docs/edit/main/website/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -38,26 +33,31 @@ const config = {
       }),
     ],
   ],
-
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "My Site",
-        logo: {
-          alt: "My Site Logo",
-          src: "img/logo.svg",
-        },
+        title: "Discord UI Toolkit",
         items: [
           {
             type: "doc",
-            docId: "intro",
+            docId: "getting-started/installation",
             position: "left",
-            label: "Tutorial",
+            label: "Installation",
           },
-          { to: "/blog", label: "Blog", position: "left" },
           {
-            href: "https://github.com/facebook/docusaurus",
+            type: "doc",
+            docId: "documentation/temp",
+            position: "left",
+            label: "Documentation",
+          },
+          {
+            to: "showcase",
+            label: "Showcase",
+            position: "left",
+          },
+          {
+            href: "https://github.com/DavidShefcik/discord-ui-toolkit",
             label: "GitHub",
             position: "right",
           },
@@ -76,37 +76,16 @@ const config = {
             ],
           },
           {
-            title: "Community",
-            items: [
-              {
-                label: "Stack Overflow",
-                href: "https://stackoverflow.com/questions/tagged/docusaurus",
-              },
-              {
-                label: "Discord",
-                href: "https://discordapp.com/invite/docusaurus",
-              },
-              {
-                label: "Twitter",
-                href: "https://twitter.com/docusaurus",
-              },
-            ],
-          },
-          {
             title: "More",
             items: [
               {
-                label: "Blog",
-                to: "/blog",
-              },
-              {
                 label: "GitHub",
-                href: "https://github.com/facebook/docusaurus",
+                href: "https://github.com/DavidShefcik/discord-ui-toolkit",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} David Shefcik - Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

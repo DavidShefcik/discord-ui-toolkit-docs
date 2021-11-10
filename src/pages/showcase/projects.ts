@@ -1,15 +1,15 @@
 /**
  * Name - The name of the project
- * Author - The GitHub username of the project author/organization
+ * Author - The username of the project author/organization
  * Description - The description of the project
  * Open Source - If the project is open source or not
- * Live URL - The URL of a live version of the project or link to download it
+ * Live URL - The URL of a live version of the project
  * Image URL - The URL of the image to use. Should be a 1:1 ratio image at least 128px by 128px (Optional)
  * Repository URL - The URL of the project repository (Optional)
  */
 interface Project {
   name: string;
-  author: string;
+  author: string | string[];
   description: string;
   open_source: boolean;
   live_url: string;
@@ -29,8 +29,8 @@ const projects: Project[] = [
     description: "The documentation site for Discord UI Toolkit.",
     open_source: true,
     live_url: "https://discord-ui-toolkit.github.io",
-    repository_url: "https://github.com/DavidShefcik/discord-ui-toolkit-docs"
-  }
+    repository_url: "https://github.com/DavidShefcik/discord-ui-toolkit-docs",
+  },
 ];
 
 export { Project, projects };

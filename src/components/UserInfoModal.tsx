@@ -18,6 +18,7 @@ export default function UserInfoModal({
   const [discriminatorValue, setDiscriminatorValue] = useState("");
   const [discriminatorError, setDiscriminatorError] = useState(false);
   const [colorValue, setColorValue] = useState("");
+  const [submitButtonLoading, setSubmitButtonLoading] = useState(false);
 
   const {
     username,
@@ -29,34 +30,48 @@ export default function UserInfoModal({
   } = useContext<UserInfo>(UserInfoContext);
 
   useEffect(() => {
-    setUsernameValue(username);
-  }, [username]);
+    if (visible) {
+      setUsernameValue(username);
+    }
+  }, [username, visible]);
 
   useEffect(() => {
-    setDiscriminatorValue(discriminator);
-  }, [discriminator]);
+    if (visible) {
+      setDiscriminatorValue(discriminator);
+    }
+  }, [discriminator, visible]);
 
   useEffect(() => {
     setColorValue(color);
   }, [color]);
 
   const submit = () => {
+    let hasError = false;
+
     setUsernameError(false);
     setDiscriminatorError(false);
+    setSubmitButtonLoading(true);
 
     if (usernameValue.replace(/\s/g, "").length > 0) {
       setUsername(usernameValue);
     } else {
       setUsernameError(true);
+      hasError = true;
     }
 
-    if (discriminatorValue.replace(/\s/g, "").length > 0) {
+    if (discriminatorValue.replace(/\s/g, "").length === 4) {
       setDiscriminator(discriminatorValue.replace("#", ""));
     } else {
       setDiscriminatorError(true);
+      hasError = true;
     }
 
     setColor(colorValue);
+
+    if (!hasError) {
+      setVisible(false);
+    }
+    setSubmitButtonLoading(false);
   };
 
   return (
@@ -67,23 +82,28 @@ export default function UserInfoModal({
       cancelText="Cancel"
       submitText="Update"
       submitColor="green"
+      alwaysCloseOnButtonPress={false}
+      submitButtonLoading={submitButtonLoading}
       onSubmitClick={submit}
+      onCancelClick={() => setVisible(false)}
     >
       <div className={css(styles.container)}>
         <div className={css(styles.topContainer)}>
-          <TextInput
-            value={usernameValue}
-            onChange={(value) => setUsernameValue(value)}
-            placeholder="Username"
-            error={usernameError}
-            onEnterPress={() => {
-              submit();
-              setVisible(false);
-            }}
-            width="80%"
-            maxLength={128}
-          />
-          <span className={css(styles.marginLeft)}>
+          <span className={css(styles.leftInput)}>
+            <TextInput
+              value={usernameValue}
+              onChange={(value) => setUsernameValue(value)}
+              placeholder="Username"
+              error={usernameError}
+              onEnterPress={() => {
+                submit();
+                setVisible(false);
+              }}
+              width="100%"
+              maxLength={128}
+            />
+          </span>
+          <span className={css(styles.rightInput)}>
             <TextInput
               value={discriminatorValue}
               onChange={(value) => setDiscriminatorValue(value)}
@@ -94,7 +114,6 @@ export default function UserInfoModal({
                 setVisible(false);
               }}
               prefix="#"
-              width="15%"
               maxLength={4}
             />
           </span>
@@ -109,12 +128,19 @@ export default function UserInfoModal({
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    padding: "10px 0",
+  },
   topContainer: {
     display: "flex",
     flexDirection: "row",
+    paddingBottom: "10px",
   },
-  marginLeft: {
+  leftInput: {
+    flex: 1,
+  },
+  rightInput: {
     marginLeft: "3%",
+    width: "20%",
   },
 });

@@ -41,13 +41,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "getting-started/installation",
-            position: "left",
-            label: "Installation",
-          },
-          {
-            type: "doc",
-            docId: "documentation/temp",
+            docId: "getting-started/Introduction",
             position: "left",
             label: "Documentation",
           },
@@ -67,16 +61,7 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "Docs",
-            items: [
-              {
-                label: "Tutorial",
-                to: "/docs/intro",
-              },
-            ],
-          },
-          {
-            title: "More",
+            title: "External Links",
             items: [
               {
                 label: "GitHub",

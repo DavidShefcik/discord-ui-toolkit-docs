@@ -1,13 +1,8 @@
-import React, {
-  useState,
-  useContext,
-  useRef,
-  useEffect,
-  MouseEventHandler,
-} from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
   Text,
   ScrollContainer,
+  ScrollContainerRef,
   Message,
   MessageProps,
   MessageInput,
@@ -39,6 +34,7 @@ export default function Demo() {
     useContext<UserInfo>(UserInfoContext);
 
   const profileRef = useRef<HTMLDivElement>();
+  const scrollContainerRef = useRef<ScrollContainerRef>();
 
   useOutsideAlerter({
     ref: profileRef,
@@ -70,12 +66,14 @@ export default function Demo() {
           avatarSource: GreenNewDefaultAvatar,
         });
       },
-      usernameOnClick: () => {
+      usernameOnClick: (username, event) => {
         setProfileInfo({
           username: "Real User",
           discriminator: "6969",
           avatarSource: GreenNewDefaultAvatar,
         });
+        setProfileLeft(event.pageX);
+        setProfileTop(event.pageY);
       },
     },
     {
@@ -89,13 +87,15 @@ export default function Demo() {
               Hello{" "}
               <Text
                 variant="mention"
-                onClick={() =>
+                onClick={(text, event) => {
                   setProfileInfo({
                     username,
                     discriminator,
                     avatarSource: OrangeNewDefaultAvatar,
-                  })
-                }
+                  });
+                  setProfileLeft(event.pageX);
+                  setProfileTop(event.pageY);
+                }}
               >
                 @you
               </Text>
@@ -112,12 +112,14 @@ export default function Demo() {
           avatarSource: BlueNewDefaultAvatar,
         });
       },
-      usernameOnClick: () => {
+      usernameOnClick: (username, event) => {
         setProfileInfo({
           username: "Totally Real User",
           discriminator: "0420",
           avatarSource: BlueNewDefaultAvatar,
         });
+        setProfileLeft(event.pageX);
+        setProfileTop(event.pageY);
       },
     },
   ];
@@ -141,16 +143,19 @@ export default function Demo() {
             avatarSource: OrangeNewDefaultAvatar,
           });
         },
-        usernameOnClick: () => {
+        usernameOnClick: (username, event) => {
           setProfileInfo({
             username,
             discriminator,
             avatarSource: OrangeNewDefaultAvatar,
           });
+          setProfileLeft(event.pageX);
+          setProfileTop(event.pageY);
         },
       };
       setUserMessages([...userMessages, newItem]);
       setMessageInput("");
+      scrollContainerRef.current.scrollToBottom();
     }
   };
 
@@ -173,7 +178,7 @@ export default function Demo() {
       <div className={css(styles.margin)}>
         <Text variant="old_title">Demo</Text>
       </div>
-      <div className={css(styles.demoContainer)}>
+      <div>
         {profileInfo && (
           <div
             ref={profileRef}
@@ -186,7 +191,7 @@ export default function Demo() {
             <SmallUserProfile {...profileInfo} />
           </div>
         )}
-        <ScrollContainer>
+        <ScrollContainer ref={scrollContainerRef}>
           <div className={css(styles.messageContainer)}>
             {[...messages, ...userMessages].map((message, index) => (
               <Message key={`${message.username}-${index}`} {...message} />
@@ -224,10 +229,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: "15px 10px",
   },
-  demoContainer: {
-    position: "relative",
-    zIndex: 1,
-  },
   profileContainer: {
     position: "absolute",
     zIndex: 10,
@@ -237,6 +238,6 @@ const styles = StyleSheet.create({
     height: "30vh",
   },
   messageInputContainer: {
-    margin: "10px",
+    margin: "24px 10px 0 10px",
   },
 });
